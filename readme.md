@@ -24,6 +24,11 @@ Built with: Flask + Python + HTML/CSS/JS + JSON DB.
 - REPL to run SQL-like commands
 - Modal Forms for adding entries easily
 
+Limitations (Intentional)
+- No query optimizer yet
+- Indexes are in-memory only
+- Limited SQL grammar support
+
 Setup Instructions
 
 Install dependencies
@@ -49,19 +54,23 @@ Open http://127.0.0.1:5000
 
 # Quick Commands (REPL)
 
+SELECT members.name, members.phone, rentals.item, rentals.qty, rentals.payment 
+FROM members
+JOIN rentals
+ON members.name = rentals.member_name;
+
 Insert new members:
-
-INSERT INTO members (name, phone, national_id, date_joined) VALUES ('Ken Jobs', '0712345678', '12345678', '2026-01-16')
-
+INSERT INTO members (name, phone, national_id, date_joined) VALUES ('Ken Kipchumba', '0113365971', '12345678', '2026-01-16')
 
 Add a rental:
+INSERT INTO rentals (member_name, item, qty, date_out, payment) VALUES ('Ken Kipchumba', 'Chair', 55, '2026-01-16', 500)
 
-INSERT INTO rentals (member_name, item, qty, date_out, payment) VALUES ('Ken Jobs', 'Chair', 5, '2026-01-16', 500)
-
+UPDATE members
+SET phone = '0722000000'WHERE name = 'Ken Kipchumba';
 
 Delete a row:
-
 DELETE FROM members WHERE id=1
+
 
 Notes
 
