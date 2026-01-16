@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amani Self Help Group</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <!-- Top Navigation -->
+    <nav class="topnav">
+        <div class="logo">
+            AMANI GROUP
+            <span class="media menu-toggle">☰</span>
+        </div>
+        <ul class="nav-links">
+            <li class="active" data-view="dashboard">Dashboard</li>
+            <li data-view="inventory">Inventory</li>
+            <li data-view="members">Members</li>
+            <li data-view="rentals">Rentals</li>
+            <li data-view="repl">REPL</li>
+        </ul>
+    </nav>
+
+    <main id="main">
+
+        <!-- Dashboard -->
+        <section id="dashboard" class="view active">
+            <div class="cards">
+                <div class="card card-purple">
+                    <div class="icon">🧾</div>
+                    <div class="number">82</div>
+                    <span>Bookings in last year</span>
+                </div>
+                <div class="card card-purple">
+                    <div class="icon">👥</div>
+                    <div class="number">17</div>
+                    <span>Total members</span>
+                </div>
+                <div class="card card-purple">
+                    <div class="icon">📊</div>
+                    <div class="number">Ksh 42,350</div>
+                    <span>Revenue in last month</span>
+                </div>
+            </div>
+            <div class="panel actions">
+                <button class="btn-add" data-table="inventory">Add Inventory</button>
+                <button class="btn-add" data-table="members">Add Member</button>
+                <button class="btn-add" data-table="rentals">Add Rental</button>
+            </div>
+            
+        </section>
+
+        <!-- Inventory Table -->
+        <section id="inventory" class="view">
+            <h2>Inventory</h2>
+            <table id="tbl-inventory">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Total</th>
+                        <th>Available</th>
+                        <th>Rented</th>
+                        <th>Status</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- Members Table -->
+        <section id="members" class="view">
+            <h2>Members</h2>
+            <table id="tbl-members">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>National ID</th>
+                        <th>Date Joined</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- Rentals Table -->
+        <section id="rentals" class="view">
+            <h2>Rentals</h2>
+            <table id="tbl-rentals">
+                <thead>
+                    <tr>
+                        <th>Member Name</th>
+                        <th>Phone</th>
+                        <th>Item</th>
+                        <th>Qty</th>
+                        <th>Available</th>
+                        <th>Date Out</th>
+                        <th>Payment(Ksh)</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </section>
+
+        <!-- REPL Table -->
+        <section id="repl" class="view">
+            <h2>REPL Console</h2>
+            <textarea id="repl-input" placeholder="Enter SQL command..."></textarea>
+            <button id="repl-btn">Run</button>
+        
+            <!-- REPL Result Panels -->
+            <div id="repl-results-single" class="repl-results-panel"></div>
+            <div id="repl-results-join" class="repl-results-panel"></div>
+        </section>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <span id="modal-close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <form id="modal-form" class="form-grid"></form>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/form.js') }}"></script>
+    <div id="toast" class="toast hidden"></div>
+</body>
+</html>
