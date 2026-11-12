@@ -1,84 +1,158 @@
-# Mini-RDBMS with Flask + REPL
+# Mini-RDBMS - Interactive SQL Command Center
 
-This is a lightweight web-based dashboard for managing a Amani (Self-Help Group).
-It provides:
+A lightweight, web-based SQL learning environment built with Flask and Python. It allows users to explore SQL commands by querying and manipulating preloaded datasets through an interactive command interface.
 
-Inventory management
+Instead of working with an empty database, users can experiment with existing tables, execute SQL-like statements, observe query results and understand how database operations work in practice.
 
-Members management
+The project combines a custom-built Relational Database Management System (RDBMS) with a browser-based SQL command interface.
 
-Rentals tracking
+## Features
 
-REPL interface for SQL-like commands
+- **Interactive SQL REPL:** Execute SQL-like commands directly from the browser.
+- **Preloaded Datasets:** Explore existing `inventory`, `members` and `rentals` tables.
+- **CRUD Operations:** Practice inserting, retrieving, updating and deleting records.
+- **Table Relationships:** Experiment with queries involving multiple tables.
+- **Primary Keys:** Support for primary key constraints and automatic ID generation.
+- **Unique Constraints:** Prevent duplicate values in designated columns.
+- **Indexing:** Basic in-memory indexing support.
+- **Persistent Storage:** Database records are saved in JSON format.
+- **Live Table Viewer:** Inspect table contents and observe changes after executing commands.
+- **Dashboard:** View database tables and key statistics.
 
-Built with: Flask + Python + HTML/CSS/JS + JSON DB.
+## Technology Stack
 
-# Features
+| Technology | Purpose |
+|---|---|
+| Python | Database engine and backend logic |
+| Flask | Web application and API |
+| HTML | Application structure |
+| CSS | Interface styling |
+| JavaScript | Frontend interactions |
+| JSON | Persistent database storage |
 
-- Custom RDBMS with tables: `inventory`, `members`, `rentals`
-- SQL-like REPL: `INSERT`, `UPDATE`, `DELETE`, `SELECT`
-- Primary keys, unique keys, indexing
-- Persistent storage in `data/database.json`
-- CRUD Operations on `Inventory`, `Members`, and `Rentals`
-- Live Dashboard with key stats
-- REPL to run SQL-like commands
-- Modal Forms for adding entries easily
+## SQL Commands to Explore
 
-Limitations (Intentional)
-- No query optimizer yet
-- Indexes are in-memory only
-- Limited SQL grammar support
+The command center supports a subset of SQL syntax, including:
 
-Setup Instructions
+| Command | Purpose |
+|---|---|
+| `SELECT` | Retrieve records |
+| `INSERT` | Add new records |
+| `UPDATE` | Modify existing records |
+| `DELETE` | Remove records |
+| `WHERE` | Filter records |
+| `JOIN` | Combine related table data, where supported by the parser |
 
-Install dependencies
+### Example Queries
 
-pip install -r requirements.txt
+**1. Retrieve all inventory records**
 
+```sql
+SELECT * FROM inventory;
+```
 
-Run the project
+**2. Retrieve selected columns**
 
-# Option 1: Using Flask directly
-flask run
+```sql
+SELECT name, phone, national_id
+FROM members;
+```
 
-# Option 2: Using run.sh (Linux/macOS)
-Amani rdbms/run.sh 
-chmod +x run.sh
+**3. Filter records**
 
-# Option 3: Using run.bat (Windows)
-Double click or click open Amani rdbms/run.bat
+```sql
+SELECT * FROM inventory
+WHERE available > 5;
+```
 
-Access the dashboard
-Open http://127.0.0.1:5000
- in your browser.
+**4. Insert a new record**
 
-# Quick Commands (REPL)
+```sql
+INSERT INTO members
+(name, phone, national_id, date_joined)
+VALUES
+('Ken Kipchumba', '0113365971', '12345678', '2026-01-16');
+```
 
-SELECT members.name, members.phone, rentals.item, rentals.qty, rentals.payment 
+**5. Update an existing record**
+
+```sql
+UPDATE members
+SET phone = '0722000000'
+WHERE id = 1;
+```
+
+**6. Delete a record**
+
+```sql
+DELETE FROM members
+WHERE id = 1;
+```
+
+**7. Query related tables**
+
+```sql
+SELECT members.name, members.phone, rentals.item, rentals.qty
 FROM members
 JOIN rentals
-ON members.name = rentals.member_name;
+ON members.name = rentals.name;
+```
 
-Insert new members:
-INSERT INTO members (name, phone, national_id, date_joined) VALUES ('Ken Kipchumba', '0113365971', '12345678', '2026-01-16')
+*Note: JOIN execution depends on the SQL parser's implemented grammar and supported operations.*
 
-Add a rental:
-INSERT INTO rentals (member_name, item, qty, date_out, payment) VALUES ('Ken Kipchumba', 'Chair', 55, '2026-01-16', 500)
+## Getting Started
 
-UPDATE members
-SET phone = '0722000000'WHERE name = 'Ken Kipchumba';
+### 1. Clone the repository
 
-Delete a row:
-DELETE FROM members WHERE id=1
+```bash
+git clone https://github.com/kypchumba/amani-mini-RDBMS.git
+cd amani-mini-RDBMS
+```
 
+### 2. Install dependencies
 
-Notes
+```bash
+pip install -r requirements.txt
+```
 
-Inventory availability updates automatically when rentals are added or deleted
+### 3. Run the application
 
-The REPL parser accepts single quotes for string values
+```bash
+python app.py
+```
 
-Demo data is preloaded in dbData
+### 4. Access the SQL Command Center
 
+Open your browser and visit:
 
+[http://127.0.0.1:5000](http://127.0.0.1:5000)
 
+## Understanding the Database
+
+The application comes with three sample tables:
+
+- `inventory` – Sample inventory records.
+- `members` – Sample member records.
+- `rentals` – Sample rental records.
+
+These datasets provide a practical environment for experimenting with database queries and learning how SQL operations affect stored records.
+
+Changes made through the command interface are persisted in JSON storage.
+
+## Current Limitations
+
+This project implements a simplified SQL-like language rather than the complete SQL standard.
+
+- Limited SQL grammar support.
+- No query optimizer.
+- Indexes are maintained in memory.
+- Not all SQL clauses and operations are implemented.
+- No full relational constraint enforcement.
+
+## Project Purpose
+
+This project explores the fundamental concepts behind relational databases and SQL execution by implementing a simplified database engine from scratch.
+
+It provides a practical environment for learning how SQL statements interact with tables, how records are stored and retrieved and how database operations are processed internally.
+
+**Built with Python, Flask and a custom Mini-RDBMS.**
