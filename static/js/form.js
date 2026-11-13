@@ -20,9 +20,11 @@ function openAddForm(table) {
     let fields = [];
     if (table === 'inventory') {
         fields = ['name', 'total', 'status'];
-    } else if (table === 'members') {
+    }
+     else if (table === 'members') {
         fields = ['name', 'phone', 'national_id', 'date_joined'];
-    } else if (table === 'rentals') {
+    }
+     else if (table === 'rentals') {
         fields = ['member_name', 'item', 'qty', 'date_out', 'payment'];
     }
 

@@ -62,6 +62,37 @@ menuToggle.addEventListener('click', () => {
     document.querySelector('.nav-links').classList.toggle('show');
 });
 
+
+document.querySelectorAll(".command pre").forEach((pre) => {
+
+    const button = document.createElement("button");
+    button.className = "copy-btn";
+    button.textContent = "Copy";
+
+    pre.parentElement.classList.add("code-wrapper");
+    pre.parentElement.insertBefore(button, pre);
+
+    button.addEventListener("click", async () => {
+        const code = pre.querySelector("code").innerText;
+
+        try {
+            await navigator.clipboard.writeText(code);
+
+            button.textContent = "Copied!";
+
+            setTimeout(() => {
+                button.textContent = "Copy";
+            }, 1500);
+
+        } catch (error) {
+            button.textContent = "Failed";
+            console.error("Copy failed:", error);
+        }
+    });
+
+});
+
+
 navLinks.forEach(link => {
     link.addEventListener('click', () => {
         navLinks.forEach(l => l.classList.remove('active'));
@@ -420,7 +451,7 @@ replInput.style.resize = 'none';
 replInput.style.overflowY = 'auto';
 replInput.style.whiteSpace = 'pre-wrap';
 replInput.style.wordBreak = 'break-word';
-replInput.placeholder = 'Enter SQL-like CRUDE command or joinings then run to manipulate the data tables...';
+replInput.placeholder = 'Enter SQL command...';
 replInput.style.width = '100%';
 replInput.style.padding = '8px';
 replInput.style.marginBottom = '10px';
