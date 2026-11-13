@@ -263,6 +263,32 @@ button:hover { opacity: 0.8; }
     background-color: #1b5ebb;
 }
 
+/* REPL COMMAND HISTORY */
+.history-entry {
+    padding: 15px;
+    margin-bottom: 15px;
+    background: #111429;
+    border: 1px solid #282856;
+    border-radius: 8px;
+}
+
+.history-command {
+    color: #8585df;
+    font-family: Consolas, monospace;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    margin-bottom: 12px;
+}
+
+.history-result {
+    overflow-x: auto;
+    color: #eeeeee;
+}
+
+.history-result table {
+    width: 100%;
+}
+
 /* REPL result panels */
 .repl-results-panel {
     margin-top: 12px;
@@ -310,7 +336,7 @@ button:hover { opacity: 0.8; }
 .toast {
     position: fixed;
     left: 50%;
-    top: 50vh; /* center in viewport regardless of window size */
+    top: 2rem; 
     transform: translate(-50%, -50%);
     background: rgba(30, 30, 30, 0.92);
     color: #fff;
