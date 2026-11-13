@@ -1,14 +1,22 @@
 // MAIN.JS
-
 function notify(msg) {
     const toast = document.getElementById('toast');
+
+    clearTimeout(toast.hideTimer);
+    clearTimeout(toast.removeTimer);
+
     toast.textContent = msg;
     toast.classList.remove('hidden');
     toast.classList.add('show');
 
-    setTimeout(() => {
+    toast.hideTimer = setTimeout(() => {
         toast.classList.remove('show');
-        setTimeout(() => toast.classList.add('hidden'), 300);
+
+        toast.removeTimer = setTimeout(() => {
+            toast.classList.add('hidden');
+            toast.textContent = '';
+        }, 350);
+
     }, 2500);
 }
 
@@ -172,6 +180,30 @@ function deleteRow(table, id) {
 }
 window.deleteRow = deleteRow;
  
+let historyResult = null;
+
+// REPL history of commands
+const replHistory = document.getElementById('repl-history');
+
+function addToHistory(command) {
+    const entry = document.createElement('div');
+    entry.className = 'history-entry';
+
+    const commandText = document.createElement('pre');
+    commandText.className = 'history-command';
+    commandText.textContent = `SQL> ${command}`;
+
+    const result = document.createElement('div');
+    result.className = 'history-result';
+
+    entry.appendChild(commandText);
+    entry.appendChild(result);
+
+    replHistory.appendChild(entry);
+
+    return result;
+}
+
 // REPL Parser
 // REPL COMMAND EXECUTOR
 const replInput = document.getElementById('repl-input');
@@ -179,12 +211,10 @@ const replBtn = document.getElementById('repl-btn');
 const replResultsSingle = document.getElementById('repl-results-single');
 const replResultsJoin = document.getElementById('repl-results-join');
 
-replBtn.addEventListener('click', () => execCommand(replInput.value));
-
 async function execCommand(cmd) {
     cmd = cmd.trim();
-    replResultsSingle.innerHTML = '';
-    replResultsJoin.innerHTML = '';
+    if (!cmd) return;
+    historyResult = addToHistory(cmd);
 
     if (!cmd) return;
 
@@ -242,11 +272,13 @@ async function execCommand(cmd) {
             });
 
             notify(`Updated ${tableName} id=${id}`);
+            historyResult.textContent = `Updated ${tableName} id=${id}`;
             refreshTables();
             return;
         }
 
         // Unknown commands
+        historyResult.textContent = `Unknown or malformed command: "${cmd}"`;
         notify(`Unknown or malformed command: "${cmd}"`);
 
     } catch (err) {
@@ -262,8 +294,16 @@ async function execCommand(cmd) {
 // SELECT handler
 function handleSelect(cmd) {
     try {
-        let [selectPart, fromPart] = cmd.split(/\s+FROM\s+/i);
-        const rawCols = selectPart.replace(/^SELECT/i, '').trim();
+        const selectMatch = cmd.match(/^SELECT\s+(.+?)\s+FROM\s+(.+)$/i);
+
+        if (!selectMatch) {
+            historyResult.textContent = 'Syntax error: Use SELECT columns FROM table';
+            notify('Invalid SELECT syntax');
+            return;
+        }
+
+        const rawCols = selectMatch[1].trim();
+        let fromPart = selectMatch[2].trim();
 
         let whereClause = null;
         if (/WHERE/i.test(fromPart)) {
@@ -369,10 +409,8 @@ function handleSelect(cmd) {
         });
         tableEl.appendChild(tbody);
 
-        // Append to proper panel
-        const targetPanel = joinTokens.length === 1 ? replResultsSingle : replResultsJoin;
-        targetPanel.innerHTML = '';
-        targetPanel.appendChild(tableEl);
+        // Append results to current history entry
+        historyResult.appendChild(tableEl);
 
     } catch (err) {
         console.error(err);
@@ -398,6 +436,7 @@ function handleDelete(match) {
     }
 
     dbData[tableName] = dbData[tableName].filter(r => r.id !== id);
+    historyResult.textContent = `Deleted row with id=${id} from ${tableName}`;
     notify(`Deleted row with id=${id} from ${tableName}`);
     refreshTables();
 }
@@ -435,6 +474,7 @@ function handleInsert(match) {
     }
 
     dbData[tableName].push(newRow);
+    historyResult.textContent = `Inserted new row into ${tableName}`;
     notify(`Inserted new row into ${tableName}`);
     refreshTables();
 }
@@ -461,12 +501,11 @@ replInput.addEventListener('input', () => {
 
 //run button
 replBtn.textContent = 'Run';
-replBtn.onclick = () => {
+replBtn.onclick = async () => {
     const cmd = replInput.value.trim();
-    if (cmd) {
-        execCommand(cmd);
-        replInput.value = '';
-    }
+    if (!cmd || replBtn.disabled) return;
+    replInput.value = '';
+    await execCommand(cmd);
 };
 
 // REPL Results Styling
