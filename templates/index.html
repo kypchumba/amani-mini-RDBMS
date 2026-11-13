@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amani Self Help Group</title>
+    <title>SQL Practical Learning</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 <body>
@@ -31,7 +31,7 @@
              <div class="cards">
                  <span class="eyebrow">INTERACTIVE SQL PLAYGROUND</span>
          
-                 <h2>Learn SQL by doing.</h2>
+                 <h2>Learn SQL by practical.</h2>
          
                  <p>
                      Explore SQL commands by querying and manipulating
@@ -197,7 +197,10 @@
             <h2>REPL Console</h2>
             <textarea id="repl-input" placeholder=""></textarea>
             <button id="repl-btn">Run</button>
-        
+            
+            <!-- REPL History-->
+            <div id="repl-history"></div>
+
             <!-- REPL Result Panels -->
             <div id="repl-results-single" class="repl-results-panel"></div>
             <div id="repl-results-join" class="repl-results-panel"></div>
