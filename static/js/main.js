@@ -199,7 +199,7 @@ function addToHistory(command) {
     entry.appendChild(commandText);
     entry.appendChild(result);
 
-    replHistory.appendChild(entry);
+    replHistory.insertBefore(entry, replHistory.firstChild);
 
     return result;
 }
