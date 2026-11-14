@@ -1,8 +1,8 @@
 #!/bin/bash
-# run.sh - start Chama Dashboard
+# run.sh - start SQL Dashboard
 
 
-echo "Starting Chama Dashboard..."
+echo "Starting SQL Dashboard..."
 
 # Activate virtual environment if it exists
 if [ -d "venv" ]; then
@@ -21,4 +21,4 @@ echo "Launching Flask..."
 flask run
 
 # End message
-echo " Chama Dashboard is running at http://127.0.0.1:5000"
+echo " SQL Dashboard is running at http://127.0.0.1:5000"

@@ -1,9 +1,9 @@
 @echo off
 REM ------------------------------
-REM run.bat - start Chama Dashboard
+REM run.bat - start SQL Dashboard
 REM ------------------------------
 
-echo Starting Chama Dashboard...
+echo Starting SQL Dashboard...
 
 REM Activate virtual environment if it exists
 if exist venv\Scripts\activate.bat (
