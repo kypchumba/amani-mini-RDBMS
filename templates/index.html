@@ -59,19 +59,19 @@
                  <div class="command-list">
          
                      <div class="command">
-                         <h4>SELECT — Read data</h4>
+                         <h4>SELECT - Read data</h4>
                          <p>Retrieve records from a table.</p>
                          <pre><code>SELECT * FROM inventory;</code></pre>
                      </div>
          
                      <div class="command">
-                         <h4>WHERE — Filter records</h4>
+                         <h4>WHERE - Filter records</h4>
                          <p>Find records that meet a condition.</p>
                          <pre><code>SELECT * FROM members WHERE id = 1;</code></pre>
                      </div>
          
                      <div class="command">
-                         <h4>INSERT — Add records</h4>
+                         <h4>INSERT - Add records</h4>
                          <p>Add a new row to an existing table.</p>
                          <pre><code>INSERT INTO inventory
          (name, total, available, rented, status)
@@ -79,7 +79,7 @@
                      </div>
          
                      <div class="command">
-                         <h4>UPDATE — Modify records</h4>
+                         <h4>UPDATE - Modify records</h4>
                          <p>Change values in existing records.</p>
                          <pre><code>UPDATE members
          SET phone = '0700000000'
@@ -87,18 +87,18 @@
                      </div>
          
                      <div class="command">
-                         <h4>DELETE — Remove records</h4>
+                         <h4>DELETE - Remove records</h4>
                          <p>Delete records that match a condition.</p>
                          <pre><code>DELETE FROM members WHERE id = 1;</code></pre>
                      </div>
          
                      <div class="command">
-                         <h4>JOIN — Combine tables</h4>
+                         <h4>JOIN - Combine tables</h4>
                          <p>Retrieve related information from multiple tables.</p>
                          <pre><code>SELECT members.name, rentals.item
-         FROM members
-         JOIN rentals
-         ON members.name = rentals.name;</code></pre>
+                           FROM members
+                           JOIN rentals
+                           ON members.name = rentals.name;</code></pre>
                      </div>
          
                  </div>
@@ -107,13 +107,13 @@
              <div class="panel">
                  <h3>Know your tables</h3>
          
-                 <p><strong>inventory</strong> — Sample items, quantities,
+                 <p><strong>inventory</strong> - Sample items, quantities,
                  availability and status.</p>
          
-                 <p><strong>members</strong> — Sample member names,
+                 <p><strong>members</strong> - Sample member names,
                  phone numbers and identification records.</p>
          
-                 <p><strong>rentals</strong> — Sample rental transactions,
+                 <p><strong>rentals</strong> - Sample rental transactions,
                  items, quantities and payments.</p>
              </div>
          

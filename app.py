@@ -3,7 +3,6 @@ from flask import Flask, render_template, request, jsonify
 from rdbms.core import Database
 from rdbms import storage
 from datetime import date
-from livereload import Server
 
 app = Flask(__name__)
 
@@ -26,8 +25,8 @@ if "members" not in db.tables:
     db.create_table(
         "members",
         columns={
-            "id": "int", "name": "str", "phone": "str",
-            "national_id": "str", "date_joined": "date"
+            "id": "int", "name": "str", "phone": "int",
+            "national_id": "int", "date_joined": "date"
         },
         primary_key="id",
         unique_keys=["national_id"]
@@ -105,16 +104,7 @@ def repl():
 
 
 # ===========================
-# LIVE RELOAD
+# LOCAL DEVELOPMENT
 # ===========================
 if __name__ == "__main__":
-    server = Server(app.wsgi_app)
-
-    server.watch("static/css/*.css")
-    server.watch("templates/**/*.html")
-
-    server.serve(
-        host="127.0.0.1",
-        port=5000,
-        debug=True
-    )
+    app.run(host="127.0.0.1", port=5000, debug=True)
